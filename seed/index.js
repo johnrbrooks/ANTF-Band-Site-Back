@@ -1,6 +1,7 @@
 const db = require("../db");
 const { Admin } = require("../models");
 const { Song } = require("../models");
+const { Show } = require("../models");
 
 const main = async () => {
 
@@ -10,7 +11,60 @@ const main = async () => {
     })
     await adminUser.save() */
 
-    const songs = [
+    const shows = [
+        {
+            venue: 'BLive',
+            show_poster: `https://imgur.com/vZ7ICui`,
+            location: 'Arlington, VA',
+            date: 'September 9th, 2023',
+            time: '10:00pm - 1:00am',
+            cover: 'Free',
+        },
+        {
+            venue: 'Sauf Haus',
+            show_poster: `https://imgur.com/rgFJL1G`,
+            location: 'Washington D.C',
+            date: 'September 30th, 2023',
+            time: '10:00pm - 1:00am',
+            cover: 'Free',
+        },
+        {
+            venue: 'BLive',
+            show_poster: `https://imgur.com/vZ7ICui`,
+            location: 'Arlington, VA',
+            date: 'October 14th, 2023',
+            time: '10:00pm - 1:00am',
+            cover: 'Free',
+        },
+        {
+            venue: 'Light Horse',
+            show_poster: `https://imgur.com/T4lMfpo`,
+            location: 'Old Town Alexandria, VA',
+            date: 'October 28th, 2023',
+            time: '9:30pm - 1:00am',
+            cover: 'Free',
+        },
+        {
+            venue: 'Crossroads',
+            show_poster: `https://imgur.com/T4lMfpo`,
+            location: 'Chantilly, VA',
+            date: 'November 3rd, 2023',
+            time: '9:30pm - 1:00am',
+            cover: 'Free',
+        },
+        {
+            venue: 'Light Horse',
+            show_poster: `https://imgur.com/T4lMfpo`,
+            location: 'Old Town Alexandria, VA',
+            date: 'November 11th, 2023',
+            time: '9:30pm - 1:00am',
+            cover: 'Free',
+        },
+    ]
+
+    await Show.insertMany(shows)
+
+    /* const songs = [
         {name: 'All Signs Point to Lauderdale', artist: 'A Day To Remember'},
         {name: 'Downfall Of Us All', artist: 'A Day To Remember'},
         {name: 'Dear Maria, Count Me In', artist: 'All Time Low'},
@@ -72,7 +126,7 @@ const main = async () => {
         {name: 'Ocean Avenue', artist: 'Yellowcard'},
     ]
 
-    await Song.insertMany(songs)
+    await Song.insertMany(songs) */
 }
 
 const run = async () => {
