@@ -18,19 +18,29 @@ const getShowById = async (req, res) => {
     }
 }
 
-/* const createSong = async (req, res) => {
+const createShow = async (req, res) => {
     try {
-        let newSong = await Song.create({
-            name: req.body.name,
-            artist: req.body.artist,
+        let newShow = await Show.create({
+            venue: req.body.venue,
+            show_poster: req.body.show_poster,
+            location: req.body.location,
+            date: req.body.date,
+            time: req.body.time,
+            cover: req.body.cover
         })
-        res.send(newSong)
-    } catch (error) {
-        res.send(error)
+        if(newShow) {
+            res.status(200).json({ message: 'Show successfully added!' })
+        } else {
+            res.status(404).json({ message: 'There was an error creating the show: ', error })
+        }
+    } catch(error) {
+        console.error('There was an error creating the show')
+        res.status(500).json({ message: 'Internal server error' })
     }
-} */
+}
 
 module.exports = {
     getAllShows,
     getShowById,
+    createShow,
 }
