@@ -7,6 +7,6 @@ Router.get('/get/:id', controller.getShowById)
 
 Router.post('/create', controller.createShow)
 
-Router.delete('/delete', controller.deleteShow)
+Router.delete('/delete/:id', controller.deleteShow)
 
 module.exports = Router
