@@ -60,6 +60,14 @@ const main = async () => {
             time: '9:30pm - 1:00am',
             cover: 'Free',
         },
+        {
+            venue: `O'Connell's`,
+            show_poster: `https://imgur.com/T4lMfpo`,
+            location: 'Old Town Alexandria, VA',
+            date: 'February 23rd, 2024',
+            time: '9:30pm - 12:30am',
+            cover: 'Free',
+        }
     ]
 
     await Show.insertMany(shows)
