@@ -1,14 +1,15 @@
-const express = require("express");
-const Router = require("./routes/AppRouter");
-const cors = require("cors");
-const db = require("./db");
+const express = require('express');
+const Router = require('./routes/AppRouter');
+const cors = require('cors');
+const db = require('./db');
 
-const { PORT, ORIGIN } = require("./config");
+const { PORT, ORIGIN } = require('./config');
 const app = express();
 
 const allowedOrigins = [
-    "https://www.anighttoforget.com",
-    "https://anighttoforget.com",
+    'https://www.anighttoforget.com',
+    'https://anighttoforget.com',
+    'http://localhost:5173',
 ];
 
 const corsOptions = {
@@ -24,17 +25,17 @@ const corsOptions = {
 
         return callback(new Error(`CORS blocked for origin: ${origin}`));
     },
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
 };
 
 app.use(express.json());
 app.use(cors(corsOptions));
 
-app.options("*", cors(corsOptions));
+app.options('*', cors(corsOptions));
 
-app.use("/api", Router);
+app.use('/api', Router);
 
 const server = app.listen(PORT, () =>
     console.log(`Application is listening on port ${PORT}.`),
