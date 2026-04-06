@@ -151,3 +151,7 @@ async function createCalendarEvent(event) {
         return null;
     }
 }
+
+module.exports = {
+    createCalendarEvent,
+};
