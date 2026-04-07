@@ -2,6 +2,7 @@ const { Show } = require('../models');
 const {
     createCalendarEvent,
 } = require('../services/googleCalendarService/googleCalendarService');
+const { findVenueValue } = require('../utilities/mappings');
 
 const getAllShows = async (req, res) => {
     try {
@@ -25,6 +26,8 @@ const createShow = async (req, res) => {
     try {
         const { venue, show_poster, location, date, time, cover } = req.body;
 
+        const pay = findVenueValue(venue);
+
         let newShow = await Show.create({
             venue: venue,
             show_poster: show_poster,
@@ -32,18 +35,33 @@ const createShow = async (req, res) => {
             date: date,
             time: time,
             cover: cover,
+            pay: pay,
         });
-        if (newShow) {
-            createCalendarEvent(newShow);
-            res.status(200).json({ message: 'Show successfully added!' });
-        } else {
-            res.status(404).json({
-                message: 'There was an error creating the show: ',
-                error,
-            });
+
+        if (!newShow) {
+            return res
+                .status(404)
+                .json({ message: 'There was an error creating the show.' });
         }
+
+        try {
+            const showCalendarEvent = await createCalendarEvent(newShow);
+
+            if (showCalendarEvent?.id) {
+                newShow.googleCalendarEventId = showCalendarEvent.id;
+                await newShow.save();
+            }
+        } catch (error) {
+            console.error(
+                'There was an error adding the show to the calendar.',
+            );
+        }
+
+        return res.status(201).json({
+            message: 'Show successfully added!',
+        });
     } catch (error) {
-        console.error('There was an error creating the show');
+        console.error('There was an error creating the show', error.message);
         res.status(500).json({ message: 'Internal server error' });
     }
 };

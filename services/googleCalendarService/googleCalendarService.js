@@ -115,7 +115,7 @@ function normalizeVenueName(venue) {
 }
 
 async function createCalendarEvent(event) {
-    let { venue, location, date, time, cover } = event;
+    let { venue, location, date, time, cover, pay } = event;
     venue = normalizeVenueName(venue);
 
     const { startTime, endTime } = convertDateFormat(date, time);
@@ -123,7 +123,9 @@ async function createCalendarEvent(event) {
     const eventPayload = {
         summary: venue,
         location,
-        description: cover,
+        description: pay
+            ? `Pay: ${pay} - Cover Charge: ${cover}`
+            : `Cover Charge: ${cover}`,
         start: {
             dateTime: startTime,
             timeZone: 'America/New_York',
