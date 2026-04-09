@@ -3,6 +3,7 @@ const Router = express.Router();
 const controller = require('../controllers/adminController');
 
 Router.get('/get/:email', controller.getAdmin);
+Router.get('/get', controller.getAdmins);
 Router.get('/checkAuth', controller.checkAuth);
 
 Router.post('/login', controller.loginAdmin);

@@ -23,6 +23,20 @@ const getAdmin = async (req, res) => {
     }
 };
 
+const getAdmins = async (req, res) => {
+    try {
+        const admins = Admin.find().select('-password');
+
+        if (!admins) {
+            return res.status(404).json({ message: 'Admin not found.' });
+        }
+
+        return res.json(admins);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
 const loginAdmin = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -155,6 +169,7 @@ const checkAuth = async (req, res) => {
 
 module.exports = {
     getAdmin,
+    getAdmins,
     createAdmin,
     loginAdmin,
     logoutAdmin,
