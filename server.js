@@ -2,6 +2,7 @@ const express = require('express');
 const Router = require('./routes/AppRouter');
 const cors = require('cors');
 const db = require('./db');
+const cookieParser = require('cookie-parser');
 
 const { PORT, ORIGIN } = require('./config');
 const app = express();
@@ -30,9 +31,9 @@ const corsOptions = {
     credentials: true,
 };
 
-app.use(express.json());
 app.use(cors(corsOptions));
-
+app.use(express.json());
+app.use(cookieParser());
 app.options('*', cors(corsOptions));
 
 app.use('/api', Router);
