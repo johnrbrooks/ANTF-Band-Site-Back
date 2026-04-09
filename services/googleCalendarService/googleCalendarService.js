@@ -124,7 +124,7 @@ async function createCalendarEvent(event) {
         summary: venue,
         location,
         description: pay
-            ? `Pay: ${pay} - Cover Charge: ${cover}`
+            ? `Pay: $${pay} - Cover Charge: ${cover}`
             : `Cover Charge: ${cover}`,
         start: {
             dateTime: startTime,

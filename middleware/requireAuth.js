@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { Admin } = require('../models/admin');
+const { Admin } = require('../models');
 
 const JWT_KEY = process.env.JWT_KEY;
 
