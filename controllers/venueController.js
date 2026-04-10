@@ -4,7 +4,7 @@ const getAllVenues = async (req, res) => {
     try {
         let venues = await Venue.find();
 
-        res.status(200).json({ venues });
+        res.status(200).json(venues);
     } catch (error) {
         res.status(500).json({ message: 'Internal Server Error' });
     }

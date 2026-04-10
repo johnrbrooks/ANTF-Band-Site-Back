@@ -13,6 +13,6 @@ Router.use('/songs', SongRouter);
 Router.use('/shows', ShowRouter);
 Router.use('/admin', AdminRouter);
 Router.use('/auth', GoogleRouter);
-Router.use('/venue', VenueRouter);
+Router.use('/venues', VenueRouter);
 
 module.exports = Router;
