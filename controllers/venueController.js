@@ -1,5 +1,15 @@
 const { Venue } = require('../models');
 
+const allowedVenueUpdateFields = [
+    'name',
+    'location',
+    'show_poster',
+    'show_time',
+    'ae_needed',
+    'cover',
+    'pay',
+];
+
 const getAllVenues = async (req, res) => {
     try {
         let venues = await Venue.find();
