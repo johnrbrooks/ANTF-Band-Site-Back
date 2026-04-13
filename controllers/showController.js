@@ -1,4 +1,5 @@
 const { Show } = require('../models');
+const { Venue } = require('../models');
 const {
     createCalendarEvent,
 } = require('../services/googleCalendarService/googleCalendarService');
@@ -22,20 +23,26 @@ const getShowById = async (req, res) => {
     }
 };
 
-const createShow = async (req, res) => {
+const addShow = async (req, res) => {
     try {
-        const { venue, show_poster, location, date, time, cover } = req.body;
+        const { venue, date } = req.body;
 
-        const pay = findVenueValue(venue);
+        const venueData = await Venue.findById(venue);
+
+        if (!venueData) {
+            return res
+                .status(404)
+                .json({ message: 'The venue was not found.' });
+        }
 
         let newShow = await Show.create({
-            venue: venue,
-            show_poster: show_poster,
-            location: location,
+            venue: venueData.name,
+            show_poster: venueData.show_poster,
+            location: venueData.location,
             date: date,
-            time: time,
-            cover: cover,
-            pay: pay,
+            time: venueData.show_time,
+            cover: venueData.cover,
+            pay: venueData.pay,
         });
 
         if (!newShow) {
@@ -66,6 +73,51 @@ const createShow = async (req, res) => {
     }
 };
 
+//DEPRECATED
+// const createShow = async (req, res) => {
+//     try {
+//         const { venue, show_poster, location, date, time, cover } = req.body;
+
+//         const pay = findVenueValue(venue);
+
+//         let newShow = await Show.create({
+//             venue: venue,
+//             show_poster: show_poster,
+//             location: location,
+//             date: date,
+//             time: time,
+//             cover: cover,
+//             pay: pay,
+//         });
+
+//         if (!newShow) {
+//             return res
+//                 .status(404)
+//                 .json({ message: 'There was an error creating the show.' });
+//         }
+
+//         try {
+//             const showCalendarEvent = await createCalendarEvent(newShow);
+
+//             if (showCalendarEvent?.id) {
+//                 newShow.googleCalendarEventId = showCalendarEvent.id;
+//                 await newShow.save();
+//             }
+//         } catch (error) {
+//             console.error(
+//                 'There was an error adding the show to the calendar.',
+//             );
+//         }
+
+//         return res.status(201).json({
+//             message: 'Show successfully added!',
+//         });
+//     } catch (error) {
+//         console.error('There was an error creating the show', error.message);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// };
+
 const deleteShow = async (req, res) => {
     try {
         let showToDelete = await Show.findOneAndDelete({
@@ -88,6 +140,6 @@ const deleteShow = async (req, res) => {
 module.exports = {
     getAllShows,
     getShowById,
-    createShow,
+    addShow,
     deleteShow,
 };
