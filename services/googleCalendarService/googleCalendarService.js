@@ -71,8 +71,6 @@ function getOAuthClient() {
         refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
     });
 
-    console.log(client);
-
     return client;
 }
 

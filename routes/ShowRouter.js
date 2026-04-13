@@ -6,7 +6,7 @@ const { requireAuth } = require('../middleware/requireAuth.js');
 Router.get('/get/all', controller.getAllShows);
 Router.get('/get/:id', controller.getShowById);
 
-Router.post('/create', requireAuth, controller.createShow);
+Router.post('/create', requireAuth, controller.addShow);
 
 Router.delete('/delete/:id', requireAuth, controller.deleteShow);
 
